@@ -1,6 +1,7 @@
 /* Scroll suave global */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Reset & básicos */
@@ -11,6 +12,7 @@ html {
 }
 
 body {
+  font-size: 16px;
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   color: #222;
@@ -25,21 +27,28 @@ body {
 
 /* HEADER */
 .site-header {
-  background: #111;
-  color: #fff;
-  position: sticky;
+  background: rgba(17, 17, 17, 0.7);
+  color: #ffbb00;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
+  transition: transform 0.3s ease;
 }
 .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
+}
+.site-header.hide {
+  transform: translateY(-100%);
 }
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
+  margin-right: 2rem; 
 }
 .main-nav ul {
   display: flex;
@@ -87,10 +96,12 @@ body {
   height: 100%;
   background: #111;
   padding: 2rem 1rem;
+  transform: translateX(-100%);
   transition: left 0.3s;
   z-index: 1000;
 }
 .mobile-sidebar.active {
+  transform: translateX(0);
   left: 0;
 }
 .mobile-sidebar .close-btn {
@@ -120,7 +131,7 @@ body {
 .hero {
   position: relative;
   background: url('../assets/img/gaming-desk.jpg') center center/cover no-repeat;
-  height: 90vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,7 +153,7 @@ body {
 }
 .hero-content .tagline {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   color: #fff;
 }
 .btn-primary {
@@ -160,53 +171,94 @@ body {
 
 /* CATEGORÍAS */
 .categorias {
+  background: url('../assets/img/categoria.png') !important;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #111;
+  padding-top: 8rem;
+  padding-bottom: 2rem;
   position: relative;
-  background: url('../assets/img/logo.png') center center/cover no-repeat;
-  padding: 6rem 0;
 }
 .categorias-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 0;
 }
 .categorias .container {
   position: relative;
   z-index: 1;
+  text-align: center;
 }
 .categorias-title {
-  text-align: center;
-  color: #fff;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+  color: #ffbb00;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
 }
 .grid-categorias {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.grid-categorias li {
   list-style: none;
-  padding: 0;
-  margin: 0;
+}
+.grid-categorias li:nth-child(-n+4) {
+  flex: 0 0 calc((100% - 3 * 2rem) / 4);
+}
+.grid-categorias li:nth-child(n+5) {
+  flex: 0 0 calc((100% - 2 * 2rem) / 3);
 }
 .grid-categorias .item {
+  display: block;
+  width: 100%;
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
-  padding: 1rem;
-  text-align: center;
   text-decoration: none;
-  border-radius: 4px;
+  padding: 1rem 0.75rem;
+  border-radius: 6px;
   font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
 }
 .grid-categorias .item:hover {
   background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-3px);
+}
+@media (max-width: 900px) {
+  .grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .grid-categorias li {
+    flex: none;
+    max-width: none;
+  }
 }
 @media (max-width: 600px) {
+  .categorias {
+    padding-top: 4rem;
+  }
+  .categorias-title {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
   .grid-categorias {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .grid-categorias .item {
+    padding: 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
 /* RESTO DE SECCIONES */
-.galeria.container { padding-top: 0; }
+.galeria.container { padding-top: 8; }
 .grid-galeria { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
 .galeria-item img { width:100%; display:block; border-radius:4px; }
 section { padding:4rem 0; background:#fff; }
@@ -222,10 +274,37 @@ h2 { text-align:center; margin-bottom:2rem; font-size:2rem; }
 .footer-content { display:flex; align-items:center; justify-content:space-between; }
 .social a img { width:24px; margin-left:0.5rem; }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .main-nav { display: none; }
   .mobile-nav-toggle { display: block; }
   .hero-content h1 { font-size: 2.8rem; }
   .grid-testimonios { grid-template-columns: 1fr; }
+}
+
+/* -----------------------------------------------------------------
+   Estilos para animaciones de scroll in & out con IntersectionObserver
+------------------------------------------------------------------- */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Suavizar aparición de los ítems en Categorías */
+.grid-categorias .item {
+  /* ya tienes background y transform, agrega opacity */
+  transition: 
+    opacity 0.6s ease-out, 
+    transform 0.2s ease-out,
+    background 0.3s ease;
+  opacity: 0;           /* partir ocultos */
+}
+
+.grid-categorias .item.in-view {
+  opacity: 1;           /* aparecer con opacidad */
 }
